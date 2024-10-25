@@ -1,16 +1,19 @@
 const express = require('express')
 const router = express.Router()
+const Ninja = require('../models/ninja')
 
 router.get('/ninjas', function(req, res) {
   res.send({ type: 'GET' })
 })
 
-router.post('/ninjas', function(req, res) {
-  res.send({
-    type: 'POST',
-    name: req.body.name,
-    rank: req.body.rank
-   })
+router.post('/ninjas', async (req, res) => {
+  const newNinja = new Ninja(req.body);
+  try {
+    const savedNinja = await newNinja.save();
+    res.status(201).json(savedNinja);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 })
 
 router.put('/ninjas/:id', function(req, res) {

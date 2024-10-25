@@ -14,4 +14,9 @@ const NinjaSchema = new Schema({
     type: Boolean,
     default: false
   }
+
+  //add geolocation
 })
+
+const Ninja = mongoose.model('ninja', NinjaSchema)
+module.exports = Ninja
