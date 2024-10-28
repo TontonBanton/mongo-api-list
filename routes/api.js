@@ -20,8 +20,13 @@ router.put('/ninjas/:id', function(req, res) {
   res.send({ type: 'PUT' })
 })
 
-router.delete('/ninjas/:id', function(req, res) {
-  res.send({ type: 'DELETE' })
-})
+router.delete('/ninjas/:id', async (req, res) => {
+  try {
+    await Ninja.findByIdAndDelete({ _id: req.params.id})
+    res.json({ message: 'Employee deleted' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router
