@@ -6,13 +6,13 @@ router.get('/ninjas', function(req, res) {
   res.send({ type: 'GET' })
 })
 
-router.post('/ninjas', async (req, res) => {
+router.post('/ninjas', async (req, res, next) => {
   const newNinja = new Ninja(req.body);
   try {
     const savedNinja = await newNinja.save();
     res.status(201).json(savedNinja);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error)
   }
 })
 
