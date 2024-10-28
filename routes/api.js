@@ -16,9 +16,14 @@ router.post('/ninjas', async (req, res, next) => {
   }
 })
 
-router.put('/ninjas/:id', function(req, res) {
-  res.send({ type: 'PUT' })
-})
+router.put('/ninjas/:id', async (req, res) => {
+  try {
+    const updatedNinja = await Ninja.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updatedNinja);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 router.delete('/ninjas/:id', async (req, res) => {
   try {
