@@ -2,9 +2,51 @@ const express = require('express')
 const router = express.Router()
 const Ninja = require('../models/ninja')
 
-router.get('/ninjas', function(req, res) {
-  res.send({ type: 'GET' })
-})
+// router.get('/ninjas', async (req, res) => {
+//   try {
+//     const ninjas = await Ninja.find();
+//     res.json(ninjas);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// })
+
+// DEPRECIATED CODE ON MONGOSE
+// router.get('/ninjas', async (req, res) => {
+//   try {
+//     const ninjas = await Ninja.geoNear(
+//       {
+//         type: 'Point',
+//         coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+//       },
+//       { maxDistance: 100000,spherical: true }
+//     );
+//     res.json(ninjas);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// })
+
+router.get('/ninjas', async (req, res) => {
+  try {
+    const ninjas = await Ninja.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: 'Point',
+            coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+          },
+          distanceField: 'distance',
+          maxDistance: 100000,
+          spherical: true
+        }
+      }
+    ]);
+    res.json(ninjas);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 router.post('/ninjas', async (req, res, next) => {
   const newNinja = new Ninja(req.body);
