@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Ninja = require('../models/ninja')
 
+
 // router.get('/ninjas', async (req, res) => {
 //   try {
 //     const ninjas = await Ninja.find();
@@ -11,16 +12,10 @@ const Ninja = require('../models/ninja')
 //   }
 // })
 
-// DEPRECIATED CODE ON MONGOSE
+// DEPRECIATED CODE ON  GEONEAR MONGOSE
 // router.get('/ninjas', async (req, res) => {
 //   try {
-//     const ninjas = await Ninja.geoNear(
-//       {
-//         type: 'Point',
-//         coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
-//       },
-//       { maxDistance: 100000,spherical: true }
-//     );
+//     const ninjas = await Ninja.geoNear( )
 //     res.json(ninjas);
 //   } catch (error) {
 //     res.status(500).json({ message: error.message });
@@ -29,6 +24,7 @@ const Ninja = require('../models/ninja')
 
 router.get('/ninjas', async (req, res) => {
   try {
+    const maxDistance = parseFloat(req.query.range) || 1000000;
     const ninjas = await Ninja.aggregate([
       {
         $geoNear: {
@@ -37,7 +33,7 @@ router.get('/ninjas', async (req, res) => {
             coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
           },
           distanceField: 'distance',
-          maxDistance: 1000000,
+          maxDistance: maxDistance,
           spherical: true
         }
       }
