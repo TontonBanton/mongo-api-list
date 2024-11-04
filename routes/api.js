@@ -37,7 +37,7 @@ router.get('/ninjas', async (req, res) => {
             coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
           },
           distanceField: 'distance',
-          maxDistance: 100000,
+          maxDistance: 1000000,
           spherical: true
         }
       }
