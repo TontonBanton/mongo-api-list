@@ -5,7 +5,7 @@ export default {
         <input type="text" v-model="lat" placeholder="Latitude" required />
         <input type="text" v-model="lng" placeholder="Longitude" required />
         <input type="text" v-model="range" placeholder="Range" required/>
-        <input type="text" v-model="origin" placeholder="Region" readonly />
+        <textarea type="text" v-model="origin" placeholder="Location" readonly />
         <input type="submit" value="Find It" />
       </form>
       <ul>
@@ -31,14 +31,14 @@ export default {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch(`/api/ninjas?lng=${lng.value}&lat=${lat.value}&range=${range.value}`);
+        //const response = await fetch(`/api/geocode?lng=${lng.value}&lat=${lat.value}&range=${range.value}`);
+        const response = await fetch(`/api/geocode/?lng=${lng.value}&lat=${lat.value}&range=${range.value}`);
         const fetchResult = await response.json();
-        console.log('fetched', fetchResult)
-        console.log('fetch ninja',fetchResult.ninjas.length)
-        console.log('fetched country',fetchResult.country)
 
+        console.log('fetched', fetchResult)
         fetchResult.ninjas.length> 0 ? (ninjas.value = fetchResult.ninjas): alert('Nothing in the area');
-        origin.value = fetchResult.country
+
+        origin.value = fetchResult.location
       } catch (error) {
         alert('Something is wrong...')
         console.error("Failed to fetch ninjas:", error);

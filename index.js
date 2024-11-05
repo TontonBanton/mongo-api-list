@@ -4,8 +4,6 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-
-
 //DB connect
 mongoose.connect("mongodb://localhost/ninjago")
   .then(() => console.log("MongoDB Connected"))

@@ -21,13 +21,16 @@ form{
   max-width: 50%;
   margin: 30px auto;
 }
-input[type="text"]{
+input[type="text"], textarea{
   margin: 10px;
   padding: 10px;
   border-radius: 4px;
   width: 90%;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+textarea{
+  background-color: rgb(179, 175, 175);
 }
 input[type="submit"]{
   color: whitesmoke;
