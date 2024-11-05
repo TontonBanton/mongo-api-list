@@ -30,6 +30,7 @@ input[type="text"], textarea{
   border-radius: 4px;
 }
 textarea{
+  height: 1rem;
   background-color: rgb(179, 175, 175);
 }
 input[type="submit"]{
@@ -43,32 +44,33 @@ input[type="submit"]{
 }
 ul{
   background-color: whitesmoke;
-  margin: 0 60px;
+  margin: 0 4 0px;
   padding: 10px;
   list-style-type: none;
 }
 li{
   padding: 10px 0;
-  margin: 10px 0;
+  margin: 5px 0;
   text-align: left;
   display: block;
 }
 span{
   display: inline-block;
-  width: 8rem;
-  margin: 0 10px;
+  font-size: small;
+  width: 6rem;
+  margin: 0 5px;
 }
 span.true{
   margin-right: 30px;
   border-radius: 10px;
-  width: 13px;
-  height: 13px;
+  width: 10px;
+  height: 10px;
   background: green;
 }
 span.false{
   margin-right: 30px;
   border-radius: 10px;
-  width: 13px;
-  height: 13px;
+  width: 10px;
+  height: 10px;
   background: red;
 }

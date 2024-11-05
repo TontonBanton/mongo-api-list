@@ -3,7 +3,7 @@ const router = express.Router()
 const Ninja = require('../models/ninja')
 
 
-router.get('/ninjas', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const ninjas = await Ninja.find();
     res.json(ninjas);
@@ -12,7 +12,7 @@ router.get('/ninjas', async (req, res) => {
   }
 })
 
-router.post('/ninjas', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const newNinja = new Ninja(req.body);
   try {
     const savedNinja = await newNinja.save();
@@ -22,7 +22,7 @@ router.post('/ninjas', async (req, res, next) => {
   }
 })
 
-router.put('/ninjas/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedNinja = await Ninja.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedNinja);
@@ -31,7 +31,7 @@ router.put('/ninjas/:id', async (req, res) => {
   }
 });
 
-router.delete('/ninjas/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     await Ninja.findByIdAndDelete({ _id: req.params.id})
     res.json({ message: 'Employee deleted' });
