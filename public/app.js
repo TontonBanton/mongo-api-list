@@ -5,7 +5,8 @@ export default {
         <input type="text" v-model="lat" placeholder="Latitude" required />
         <input type="text" v-model="lng" placeholder="Longitude" required />
         <input type="text" v-model="range" placeholder="Range" required/>
-        <input type="submit" value="Find Ninjas" />
+        <input type="text" v-model="origin" placeholder="Region" readonly />
+        <input type="submit" value="Find It" />
       </form>
       <ul>
         <li v-for="(ninja, index) in ninjas" :key="index">
@@ -25,13 +26,19 @@ export default {
     const lat = Vue.ref('');
     const lng = Vue.ref('');
     const range = Vue.ref('');
+    const origin = Vue.ref('');
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
         const response = await fetch(`/api/ninjas?lng=${lng.value}&lat=${lat.value}&range=${range.value}`);
         const fetchResult = await response.json();
-        fetchResult.length === 0 ? alert('Nothing in the area') : (ninjas.value = fetchResult);
+        console.log('fetched', fetchResult)
+        console.log('fetch ninja',fetchResult.ninjas.length)
+        console.log('fetched country',fetchResult.country)
+
+        fetchResult.ninjas.length> 0 ? (ninjas.value = fetchResult.ninjas): alert('Nothing in the area');
+        origin.value = fetchResult.country
       } catch (error) {
         alert('Something is wrong...')
         console.error("Failed to fetch ninjas:", error);
@@ -39,7 +46,7 @@ export default {
     };
 
     return {
-      ninjas, lat,lng, range,
+      ninjas, lat,lng, range, origin,
       handleSubmit
     };
   }
